@@ -30,7 +30,7 @@ const variantClass = computed(() => {
     case "secondary":
       return "bg-white text-black rounded-[80px] border-secondary border hover:bg-primary hover:text-white";
     default:
-      return "";
+      return "bg-primary text-white w-full  rounded-[8px] hover:bg-primary/80";
   }
 });
 
