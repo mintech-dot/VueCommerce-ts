@@ -12,9 +12,9 @@ export default {
       primary: "#141718",
       secondary: "#6C7275",
       tertiary: "#FEFEFE",
-      white: "#000000",
-      black: "#FFFFFF",
-      transparent: "transparent",
+      white: "#FEFEFE",
+      black: "#000000",
+      transparent : "transparent"
     },
   },
   plugins: [],
