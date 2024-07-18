@@ -22,7 +22,22 @@
     </div>
   </div>
   <div>
-    <ProductCard :product="products" :loading="loading" :error="error" />
+    <div
+    v-if="products && products.items"
+    class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
+  >
+    <div
+      v-for="product in products.items"
+      :key="product.id"
+      class="flex border-secondary/50 border rounded-xl"
+    >
+    <ProductCard :product="product"/>
+    </div>
+    </div>
+
+  <p v-else-if="loading">Loading...</p>
+  <p v-else-if="error">No products found.</p>
+  <p v-else class="text-center">No products found.</p>
   </div>
   <div div class="flex justify-center py-8">
     <Button variant="secondary" size="lg">Show More</Button>
@@ -58,5 +73,5 @@ import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
 const { result, loading, error } =
   useQuery<GetProductsQuery>(GetProductsDocument);
 
-const products = computed(() => result.value?.products);
+const products = computed(() => result.value?.products) || [];
 </script>

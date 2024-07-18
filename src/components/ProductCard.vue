@@ -1,13 +1,5 @@
 <template>
-  <div
-    v-if="product && product.items"
-    class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
-  >
-    <div
-      v-for="product in product.items"
-      :key="product.id"
-      class="flex border-secondary/50 border rounded-xl"
-    >
+ 
       <div class="w-1/2">
         <img
           v-if="product.featuredAsset"
@@ -37,22 +29,16 @@
           <h2 class="py-4">wishlist</h2>
         </div>
       </div>
-    </div>
-  </div>
-  <p v-else-if="loading">Loading...</p>
-  <p v-else-if="error">No products found.</p>
-  <p v-else class="text-center">No products found.</p>
 </template>
 
 <script setup lang="ts">
 import rating from "../assets/rating.svg";
 import Button from "../components/ui/Button.vue";
 import heart from "../assets/heart.svg";
+import {Product} from "../gql/graphql";
 
 type ProductCardProps = {
-  product: any;
-  loading: boolean;
-  error: any;
+  product: Product;
 };
 const props = defineProps<ProductCardProps>();
 </script>
