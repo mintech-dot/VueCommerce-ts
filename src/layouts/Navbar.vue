@@ -4,7 +4,7 @@
   >
     <div class="text-3xl font-bold font-poppins">Izar</div>
     <div class="flex gap-2 md:gap-4 text-secondary lg:pl-56 pt-2 font-inter">
-      <ul class="hover:text-primary hidden sm:block">
+      <ul class="text-primary hidden sm:block">
         Home
       </ul>
       <ul class="hover:text-primary hidden sm:block">
