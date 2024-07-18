@@ -6,7 +6,7 @@ import {
   import { DefaultApolloClient } from "@vue/apollo-composable";
   
   const httpLink = createHttpLink({
-    uri: "https://readonlydemo.vendure.io/shop-api",
+    uri: import.meta.env.VITE_GRAPHQL_ENDPOINT,
   });
   
   const apolloClient = new ApolloClient({
