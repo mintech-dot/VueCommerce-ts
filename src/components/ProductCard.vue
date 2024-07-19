@@ -18,7 +18,8 @@
       <h2 class="text-[#121212] text-[14px] font-inter font-semibold">
         $ {{ product.variants[0].priceWithTax }}
       </h2>
-      <p ref="description"
+      <p
+        ref="description"
         class="text-secondary text-base font-inter font-normal text-wrap pt-4 line-clamp-5"
       >
         {{ product.description }}
@@ -29,11 +30,11 @@
       <div class="flex gap-2 justify-center">
         <button @click="addToWishlist" class="flex gap-2">
           <div class="pt-[14px]">
-          <heart />
-        </div>
-        <h2 class="py-4">wishlist</h2>
+            <heart v-if="!wishlist" color="stroke-black hover:fill-black" />
+            <heart v-else="wishlist" color="fill-black hover:stroke-black" />
+          </div>
+          <h2 class="py-4">wishlist</h2>
         </button>
-
       </div>
     </div>
   </div>
@@ -44,22 +45,29 @@ import rating from "../assets/rating.svg";
 import Button from "../components/ui/Button.vue";
 import heart from "../assets/heart.vue";
 import { Product } from "../gql/graphql";
+import { ref } from "vue";
 
 type ProductCardProps = {
   product: Product;
 };
 const props = defineProps<ProductCardProps>();
+const wishlist = ref(false);
+
+const existingItems = JSON.parse(localStorage.getItem("wishlist") || "[]");
+existingItems.forEach((item: any) => {
+  if (item.id === props.product.id) {
+    wishlist.value = true;
+  }
+});
 
 const addToWishlist = () => {
-  // Add to localStorage
-  const existingItems = JSON.parse(localStorage.getItem('wishlist') || '[]');
-  
-  // Flag to check if item already exists
+  const existingItems = JSON.parse(localStorage.getItem("wishlist") || "[]");
+
   let itemExists = false;
-  
+
   existingItems.forEach((item: any) => {
     if (item.id === props.product.id) {
-      itemExists = true; // Set the flag to true if item is found
+      itemExists = true;
     }
   });
 
@@ -71,12 +79,11 @@ const addToWishlist = () => {
       name: props.product.name,
       price: props.product.variants[0].priceWithTax,
       description: props.product.description,
-      imageUrl: props.product.featuredAsset?.preview
+      imageUrl: props.product.featuredAsset?.preview,
     };
     existingItems.push(newItem);
-    localStorage.setItem('wishlist', JSON.stringify(existingItems));
+    localStorage.setItem("wishlist", JSON.stringify(existingItems));
     alert("Product added to wishlist");
   }
-}
-
+};
 </script>

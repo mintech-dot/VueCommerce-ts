@@ -26,7 +26,7 @@
 
       <div class="flex gap-1">
         <div class="pt-[8px]">
-            <heart />
+            <heart color="stroke-black hover:fill-black"/>
           </div>
         <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
       </div>

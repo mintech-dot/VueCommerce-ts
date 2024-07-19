@@ -5,7 +5,7 @@
     viewBox="0 0 21 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class="w-8 h-8 stroke-black hover:fill-black "
+    :class="['w-8 h-8', color]"   
   >
     <path
       clip-rule="evenodd"
@@ -13,4 +13,8 @@
     />
   </svg>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const props = defineProps<{
+    color?: string
+  }>()
+</script>
