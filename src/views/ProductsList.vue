@@ -23,21 +23,15 @@
   </div>
   <div>
     <div
-    v-if="products && products.items"
-    class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
-  >
-    <div
-      v-for="product in products.items"
-      :key="product.id"
-      class="flex border-secondary/50 border rounded-xl"
+      v-if="products && products"
+      class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
     >
-    <ProductCard :product="product"/>
-    </div>
+      <ProductCard :products="products" />
     </div>
 
-  <p v-else-if="loading">Loading...</p>
-  <p v-else-if="error">No products found.</p>
-  <p v-else class="text-center">No products found.</p>
+    <p v-else-if="loading" class="text-center">Loading...</p>
+    <p v-else-if="error" class="text-center">No products found.</p>
+    <p v-else class="text-center">No products found.</p>
   </div>
   <div div class="flex justify-center py-8">
     <Button variant="secondary" size="lg">Show More</Button>
@@ -45,10 +39,13 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from "vue";
+import { useQuery } from "@vue/apollo-composable";
+import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
 import ProductCard from "../components/ProductCard.vue";
-import { ref } from "vue";
 import Dropdown from "../components/ui/Dropdown.vue";
 import Button from "../components/ui/Button.vue";
+
 interface Option {
   value: string;
   text: string;
@@ -66,12 +63,8 @@ const FilterOptions = ref<Option[]>([
   { value: "product3", text: "Product 3" },
 ]);
 
-import { computed } from "vue";
-import { useQuery } from "@vue/apollo-composable";
-import { GetProductsDocument, GetProductsQuery } from "../gql/graphql"; 
-
 const { result, loading, error } =
   useQuery<GetProductsQuery>(GetProductsDocument);
 
-const products = computed(() => result.value?.products) || [];
+const products = computed(() => result.value?.products?.items || []);
 </script>

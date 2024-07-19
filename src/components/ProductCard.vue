@@ -1,5 +1,9 @@
 <template>
- 
+  <div
+        v-for="product in products"
+        :key="product.id"
+        class="flex border-secondary/50 border rounded-xl"
+      >
       <div class="w-1/2">
         <img
           v-if="product.featuredAsset"
@@ -31,6 +35,7 @@
           <h2 class="py-4">wishlist</h2>
         </div>
       </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -40,7 +45,7 @@ import heart from "../assets/heart.vue";
 import {Product} from "../gql/graphql";
 
 type ProductCardProps = {
-  product: Product;
+  products: Product;
 };
 const props = defineProps<ProductCardProps>();
 </script>
