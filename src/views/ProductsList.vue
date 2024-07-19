@@ -26,7 +26,7 @@
       v-if="products && products"
       class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
     >
-      <ProductCard :products="products" />
+      <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </div>
 
     <p v-else-if="loading" class="text-center">Loading...</p>
