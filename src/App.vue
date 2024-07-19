@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import ProductListing from "./pages/ProductListing.vue";
 </script>
 
 <template>
-  <HelloWorld msg="Welcome to Izar" />
+  <ProductListing />
 </template>
-
