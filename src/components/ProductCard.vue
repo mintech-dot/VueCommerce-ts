@@ -25,7 +25,9 @@
           <Button variant="primary" size="lg">Add to cart</Button>
         </div>
         <div class="flex gap-2 justify-center">
-          <img :src="heart" alt="" class="w-8" />
+          <div class="pt-[14px]">
+            <heart />
+          </div>
           <h2 class="py-4">wishlist</h2>
         </div>
       </div>
@@ -34,7 +36,7 @@
 <script setup lang="ts">
 import rating from "../assets/rating.svg";
 import Button from "../components/ui/Button.vue";
-import heart from "../assets/heart.svg";
+import heart from "../assets/heart.vue";
 import {Product} from "../gql/graphql";
 
 type ProductCardProps = {

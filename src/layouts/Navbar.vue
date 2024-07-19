@@ -25,7 +25,9 @@
       </div>
 
       <div class="flex gap-1">
-        <img :src="heart" class="w-8" alt="" />
+        <div class="pt-[8px]">
+            <heart />
+          </div>
         <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
       </div>
       <div class="hidden sm:block">
@@ -36,6 +38,6 @@
 </template>
 <script setup lang="ts">
 import shop from "../assets/shop.svg";
-import heart from "../assets/heart.svg";
+import heart from "../assets/heart.vue";
 import Button from "../components/ui/Button.vue";
 </script>
