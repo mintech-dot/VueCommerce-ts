@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import ProductListing from "./pages/ProductListing.vue";
+import Navbar from "./layouts/Navbar.vue";
+import Footer from "./layouts/Footer.vue";
 </script>
 
 <template>
-  <ProductListing />
+  <Navbar />
+  <RouterView />
+  <Footer />
 </template>
