@@ -45,7 +45,7 @@ import rating from "../assets/rating.svg";
 import Button from "../components/ui/Button.vue";
 import heart from "../assets/heart.vue";
 import { Product } from "../gql/graphql";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 type ProductCardProps = {
   product: Product;
@@ -54,26 +54,14 @@ const props = defineProps<ProductCardProps>();
 const wishlist = ref(false);
 
 const existingItems = JSON.parse(localStorage.getItem("wishlist") || "[]");
-existingItems.forEach((item: any) => {
-  if (item.id === props.product.id) {
-    wishlist.value = true;
-  }
-});
+wishlist.value = existingItems.some(
+  (item: any) => item.id === props.product.id
+);
 
-const addToWishlist = () => {
+watch(wishlist, (value) => {
   const existingItems = JSON.parse(localStorage.getItem("wishlist") || "[]");
 
-  let itemExists = false;
-
-  existingItems.forEach((item: any) => {
-    if (item.id === props.product.id) {
-      itemExists = true;
-    }
-  });
-
-  if (itemExists) {
-    alert("Product already in wishlist");
-  } else {
+  if (value) {
     const newItem = {
       id: props.product.id,
       name: props.product.name,
@@ -82,8 +70,18 @@ const addToWishlist = () => {
       imageUrl: props.product.featuredAsset?.preview,
     };
     existingItems.push(newItem);
-    localStorage.setItem("wishlist", JSON.stringify(existingItems));
-    alert("Product added to wishlist");
+  } else {
+    const updatedItems = existingItems.filter(
+      (item: any) => item.id !== props.product.id
+    );
+    existingItems.length = 0;
+    existingItems.push(...updatedItems);
   }
+
+  localStorage.setItem("wishlist", JSON.stringify(existingItems));
+});
+
+const addToWishlist = () => {
+  wishlist.value = !wishlist.value;
 };
 </script>
