@@ -2,7 +2,7 @@
   <nav
     class="fixed w-full bg-white shadow-xl flex justify-between p-4 md:px-8 lg:px-24 cursor-pointer"
   >
-    <div class="text-3xl font-bold font-poppins">Izar</div>
+    <div class="text-3xl font-bold font-poppins"> <RouterLink to="/">  Izar </RouterLink></div>
     <div class="flex gap-2 md:gap-4 text-secondary lg:pl-56 pt-2 font-inter">
       <ul class="text-primary hidden sm:block">
         Home
@@ -26,7 +26,7 @@
 
       <div class="flex gap-1">
         <div class="pt-[8px]">
-            <heart color="stroke-black hover:fill-black"/>
+           <RouterLink to="/whishlist"> <heart color="stroke-black hover:fill-black"/></RouterLink>
           </div>
         <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
       </div>
