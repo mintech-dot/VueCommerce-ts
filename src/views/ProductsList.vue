@@ -26,7 +26,12 @@
       v-if="products && products"
       class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
     >
-      <ProductCard v-for="product in products" :key="product.id" :product="product" />
+      <ProductCard
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        :isInWishlist="isInWishlist(product.id)"
+      />
     </div>
 
     <p v-else-if="loading" class="text-center">Loading...</p>
@@ -67,4 +72,12 @@ const { result, loading, error } =
   useQuery<GetProductsQuery>(GetProductsDocument);
 
 const products = computed(() => result.value?.products?.items || []);
+
+const wishlist = ref<Array<any>>(
+  JSON.parse(localStorage.getItem("wishlist") || "[]")
+);
+
+const isInWishlist = (productId: string) => {
+  return wishlist.value.some((item) => item.id === productId);
+};
 </script>
