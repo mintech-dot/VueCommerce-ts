@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold font-poppins pt-6">Wishlist</h1>
 
     <div class="p-4 border border-secondary/20 rounded-xl mt-6 shadow-lg">
-        <div v-if="!products.length">
+        <div v-if="!productsInWishlist.length">
           <p class="text-primary text-center font-inter font-semibold">No products found.</p>
         </div>
         <div v-else>
@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="item in products"
+            v-for="item in productsInWishlist"
             :key="item.id"
             class="border-b border-secondary/30"
           >
@@ -52,7 +52,10 @@
 import Newsletter from "../views/Newsletter.vue";
 import Button from "../components/ui/Button.vue";
 import deleteicon from "../assets/delete.svg";
-import { ref } from "vue";
+import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
+import { computed } from "vue";
+import { useQuery } from "@vue/apollo-composable";
+
 
 interface Product {
   id: string;
@@ -66,13 +69,19 @@ interface Product {
   }[];
 }
 
-const products = ref<Product[]>([]);
+const productsQuery =
+  useQuery<GetProductsQuery>(GetProductsDocument);
 
-const cartString = localStorage.getItem("wishlist");
-products.value = cartString ? JSON.parse(cartString) : [];
+const productsInWishlist = computed(() => {
+  const allProducts = productsQuery.result.value?.products.items || [];
+  const wishlistProductIds = JSON.parse(localStorage.getItem("wishlist") || "[]");
+  // wishlistProductIds = ['123', ];
+  const wishlistProducts = allProducts.filter((product) => wishlistProductIds.includes( product.id));
+  return wishlistProducts;
+});
 
 const removeFromWishlist = (id: string) => {
-  products.value = products.value.filter((item) => item.id !== id);
-  localStorage.setItem("wishlist", JSON.stringify(products.value));
+  //products.value = products.value.filter((item) => item.id !== id);
+  //localStorage.setItem("wishlist", JSON.stringify(products.value));
 };
 </script>

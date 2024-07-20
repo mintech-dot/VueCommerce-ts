@@ -59,7 +59,7 @@ const emit = defineEmits(['update-wishlist']);
 function toggleWishlist() {
   isInWishlist.value = !isInWishlist.value;
   emit('update-wishlist', {
-    product: props.product,
+    productId: props.product.id,
     isInWishlist: isInWishlist.value
   });
 }

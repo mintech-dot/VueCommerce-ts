@@ -75,31 +75,31 @@ const { result, loading, error } =
 
 const products = computed(() => result.value?.products?.items || []);
 
-const wishlist = ref<Array<any>>(
+const wishlist = ref<string[]>(
   JSON.parse(localStorage.getItem("wishlist") || "[]")
 );
 
 const isInWishlist = (productId: string) => {
-  return wishlist.value.some((item) => item.id === productId);
+  return wishlist.value.includes(productId);
 };
 
 function handleWishlistUpdate({
-  product,
+  productId,
   isInWishlist,
 }: {
-  product: Product;
+  productId: string;
   isInWishlist: boolean;
 }) {
   let existingItems = JSON.parse(
     localStorage.getItem("wishlist") || "[]"
-  ) as Product[];
+  ) as string[];
 
   if (isInWishlist) {
-    if (!existingItems.some((item) => item.id === product.id)) {
-      existingItems.push(product);
+    if (!existingItems.includes(productId)) {
+      existingItems.push(productId);
     }
   } else {
-    existingItems = existingItems.filter((item) => item.id !== product.id);
+    existingItems = existingItems.filter((existingProductId) => existingProductId !== productId);
   }
 
   localStorage.setItem("wishlist", JSON.stringify(existingItems));
