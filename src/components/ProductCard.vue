@@ -28,7 +28,7 @@
         <Button variant="primary" size="lg">Add to cart</Button>
       </div>
       <div class="flex gap-2 justify-center">
-        <button @click="addToWishlist" class="flex gap-2">
+        <button @click="toggleWishlist" class="flex gap-2">
           <div class="pt-[14px]">
             <heart v-if="!isInWishlist"   color="stroke-black hover:fill-black" />
             <heart v-else color="fill-black hover:stroke-black" />
@@ -44,7 +44,7 @@
 import rating from "../assets/rating.svg";
 import Button from "../components/ui/Button.vue";
 import heart from "../assets/heart.vue";
-import { watchEffect, ref  } from "vue";
+import { ref, defineEmits  } from "vue";
 import { Product } from "../gql/graphql";
 
 type ProductCardProps = {
@@ -54,27 +54,15 @@ type ProductCardProps = {
 const props = defineProps<ProductCardProps>();
 const isInWishlist = ref(props.isInWishlist);
 
-const addToWishlist = () => {
-  isInWishlist.value = !isInWishlist.value;
-};
+const emit = defineEmits(['update-wishlist']);
 
-watchEffect(() => {
-  const existingItems = JSON.parse(localStorage.getItem("wishlist") || "[]");
-  if (isInWishlist.value) {
-    const newItem = {
-      id: props.product.id,
-      name: props.product.name,
-      price: props.product.variants[0].priceWithTax,
-      imageUrl: props.product.featuredAsset?.preview,
-    };
-    existingItems.push(newItem);
-  } else {
-    const updatedItems = existingItems.filter(
-      (item: any) => item.id !== props.product.id
-    );
-    existingItems.length = 0;
-    existingItems.push(...updatedItems);
-  }
-  localStorage.setItem("wishlist", JSON.stringify(existingItems));
-});
+function toggleWishlist() {
+  isInWishlist.value = !isInWishlist.value;
+  emit('update-wishlist', {
+    product: props.product,
+    isInWishlist: isInWishlist.value
+  });
+}
+
+
 </script>

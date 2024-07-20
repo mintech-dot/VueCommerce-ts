@@ -31,6 +31,7 @@
         :key="product.id"
         :product="product"
         :isInWishlist="isInWishlist(product.id)"
+        @update-wishlist="handleWishlistUpdate"
       />
     </div>
 
@@ -47,6 +48,7 @@
 import { computed, ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
+import { Product } from "../gql/graphql";
 import ProductCard from "../components/ProductCard.vue";
 import Dropdown from "../components/ui/Dropdown.vue";
 import Button from "../components/ui/Button.vue";
@@ -80,4 +82,26 @@ const wishlist = ref<Array<any>>(
 const isInWishlist = (productId: string) => {
   return wishlist.value.some((item) => item.id === productId);
 };
+
+function handleWishlistUpdate({
+  product,
+  isInWishlist,
+}: {
+  product: Product;
+  isInWishlist: boolean;
+}) {
+  let existingItems = JSON.parse(
+    localStorage.getItem("wishlist") || "[]"
+  ) as Product[];
+
+  if (isInWishlist) {
+    if (!existingItems.some((item) => item.id === product.id)) {
+      existingItems.push(product);
+    }
+  } else {
+    existingItems = existingItems.filter((item) => item.id !== product.id);
+  }
+
+  localStorage.setItem("wishlist", JSON.stringify(existingItems));
+}
 </script>

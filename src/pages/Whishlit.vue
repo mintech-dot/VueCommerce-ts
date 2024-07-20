@@ -28,13 +28,13 @@
                 alt=""
                 class="h-6 cursor-pointer"
               />
-              <img :src="item.imageUrl" class="h-16" alt="" />
+              <img :src="item.featuredAsset.preview" class="h-16" alt="" />
               <h1 class="text-primary text-[14px] sm:text-md font-semibold font-inter">
                 {{ item.name }}
               </h1>
             </td>
             <td class="text-primary font-semibold font-inter py-4 text-[14px] md:text-md ">
-              {{ item.price }}
+              {{ item.variants[0].priceWithTax }}
             </td>
             <td class="md:pr-10 py-4 w-1/6">
               <Button variant="primary" size="lg">Add</Button>
@@ -58,8 +58,12 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
-  imageUrl: string;
+  featuredAsset: {
+    preview: string;
+  };
+  variants: {
+    priceWithTax: string;
+  }[];
 }
 
 const products = ref<Product[]>([]);
