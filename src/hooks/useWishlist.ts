@@ -1,4 +1,8 @@
 import { ref, computed } from "vue";
+import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
+import { useQuery } from "@vue/apollo-composable";
+
+const productsQuery = useQuery<GetProductsQuery>(GetProductsDocument);
 
 export const useWishlist = () => {
   const wishlistItems = ref<string[]>([]);
@@ -12,6 +16,20 @@ export const useWishlist = () => {
 
   const save = () => {
     localStorage.setItem("wishlist", JSON.stringify(wishlistItems.value));
+  };
+
+  const getProductsInWishlist = () => {
+    const allProducts = productsQuery.result.value?.products.items || [];
+    return allProducts.filter((product) =>
+      wishlistItems.value.includes(product.id)
+    );
+  };
+
+  const searchProductsInWishlist = (searchTerm: string) => {
+    const productsInWishlist = getProductsInWishlist();
+    return productsInWishlist.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   };
 
   const addProductToWhlist = (productId: string) => {
@@ -37,6 +55,8 @@ export const useWishlist = () => {
     addProductToWhlist,
     removeProductfromWishlist,
     isProductInWishlist,
+    getProductsInWishlist,
+    searchProductsInWishlist,
     save,
   };
 };

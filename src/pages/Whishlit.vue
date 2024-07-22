@@ -74,33 +74,27 @@
 import Newsletter from "../views/Newsletter.vue";
 import Button from "../components/ui/Button.vue";
 import deleteicon from "../assets/delete.svg";
-import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
 import { computed, ref } from "vue";
-import { useQuery } from "@vue/apollo-composable";
 import { useWishlist } from "../hooks/useWishlist";
 
-const productsQuery = useQuery<GetProductsQuery>(GetProductsDocument);
-
-const { wishlist: whishlistProductsIds, removeProductfromWishlist } =
-  useWishlist();
+const {
+  getProductsInWishlist,
+  removeProductfromWishlist,
+  searchProductsInWishlist,
+} = useWishlist();
 
 const searchText = ref("");
 
 const productsInWishlist = computed(() => {
-  const allProducts = productsQuery.result.value?.products.items || [];
-  return allProducts.filter((product) =>
-    whishlistProductsIds.value.includes(product.id)
-  );
+  return getProductsInWishlist();
 });
 
 const filteredProducts = computed(() => {
-  if(searchText.value === '') return productsInWishlist.value
-  else{
-  return productsInWishlist.value.filter((product) =>
-    product.name.toLowerCase().includes(searchText.value.toLowerCase())
-  );
+  if (searchText.value === "") return productsInWishlist.value;
+  else {
+    return searchProductsInWishlist(searchText.value);
   }
-})
+});
 const removeFromWishlist = (id: string) => {
   removeProductfromWishlist(id);
 };
