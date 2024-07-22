@@ -16,7 +16,12 @@
         {{ product.name }}
       </h1>
       <h2 class="text-[#121212] text-[14px] font-inter font-semibold">
-        $ {{ product.variants[0].priceWithTax }}
+        {{
+          product.variants[0].priceWithTax.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })
+        }}
       </h2>
       <p
         ref="description"
@@ -30,7 +35,7 @@
       <div class="flex gap-2 justify-center">
         <button @click="toggleWishlist" class="flex gap-2">
           <div class="pt-[14px]">
-            <heart v-if="!isInWishlist"   color="stroke-black hover:fill-black" />
+            <heart v-if="!isInWishlist" color="stroke-black hover:fill-black" />
             <heart v-else color="fill-black hover:stroke-black" />
           </div>
           <h2 class="py-4">wishlist</h2>
@@ -44,7 +49,7 @@
 import rating from "../assets/rating.svg";
 import Button from "../components/ui/Button.vue";
 import heart from "../assets/heart.vue";
-import { ref, defineEmits  } from "vue";
+import { ref, defineEmits } from "vue";
 import { Product } from "../gql/graphql";
 
 type ProductCardProps = {
@@ -54,15 +59,13 @@ type ProductCardProps = {
 const props = defineProps<ProductCardProps>();
 const isInWishlist = ref(props.isInWishlist);
 
-const emit = defineEmits(['update-wishlist']);
+const emit = defineEmits(["update-wishlist"]);
 
 function toggleWishlist() {
   isInWishlist.value = !isInWishlist.value;
-  emit('update-wishlist', {
+  emit("update-wishlist", {
     productId: props.product.id,
-    isInWishlist: isInWishlist.value
+    isInWishlist: isInWishlist.value,
   });
 }
-
-
 </script>
