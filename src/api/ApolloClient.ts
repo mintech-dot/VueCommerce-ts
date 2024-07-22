@@ -3,7 +3,7 @@ import {
     InMemoryCache,
     createHttpLink,
   } from "@apollo/client/core";
-  import { DefaultApolloClient } from "@vue/apollo-composable";
+  import { DefaultApolloClient, provideApolloClient } from "@vue/apollo-composable";
   
   const httpLink = createHttpLink({
     uri: import.meta.env.VITE_GRAPHQL_ENDPOINT,
@@ -13,5 +13,5 @@ import {
     link: httpLink,
     cache: new InMemoryCache(),
   });
-  
+  provideApolloClient(apolloClient);
   export { apolloClient, DefaultApolloClient };
