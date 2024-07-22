@@ -30,7 +30,7 @@
         v-for="product in products"
         :key="product.id"
         :product="product"
-        :isInWishlist="isInWishlist(product.id)"
+        :isInWishlist="isInWishlists(product.id)"
         @update-wishlist="handleWishlistUpdate"
       />
     </div>
@@ -48,10 +48,10 @@
 import { computed, ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
-import { Product } from "../gql/graphql";
 import ProductCard from "../components/ProductCard.vue";
 import Dropdown from "../components/ui/Dropdown.vue";
 import Button from "../components/ui/Button.vue";
+import { useWishlist } from "../hooks/useWishlist";
 
 interface Option {
   value: string;
@@ -75,12 +75,10 @@ const { result, loading, error } =
 
 const products = computed(() => result.value?.products?.items || []);
 
-const wishlist = ref<string[]>(
-  JSON.parse(localStorage.getItem("wishlist") || "[]")
-);
+const { isProductInWishlist, addProductToWhlist, removeProductfromWishlist, save } = useWishlist();
 
-const isInWishlist = (productId: string) => {
-  return wishlist.value.includes(productId);
+const isInWishlists = (productId: string) => {
+  return isProductInWishlist(productId);
 };
 
 function handleWishlistUpdate({
@@ -90,18 +88,12 @@ function handleWishlistUpdate({
   productId: string;
   isInWishlist: boolean;
 }) {
-  let existingItems = JSON.parse(
-    localStorage.getItem("wishlist") || "[]"
-  ) as string[];
-
   if (isInWishlist) {
-    if (!existingItems.includes(productId)) {
-      existingItems.push(productId);
-    }
+    addProductToWhlist(productId);
   } else {
-    existingItems = existingItems.filter((existingProductId) => existingProductId !== productId);
+    removeProductfromWishlist(productId);
   }
 
-  localStorage.setItem("wishlist", JSON.stringify(existingItems));
+  save();
 }
 </script>
