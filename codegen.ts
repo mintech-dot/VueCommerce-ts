@@ -1,22 +1,25 @@
-interface CustomImportMeta extends ImportMeta {
-  env: {
-    VITE_GRAPHQL_ENDPOINT: string;
-  };
-}
-import type { CodegenConfig } from '@graphql-codegen/cli';
-
-const customImportMeta = import.meta as CustomImportMeta;
+import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: customImportMeta.env.VITE_GRAPHQL_ENDPOINT,
-  documents: ["src/**/*.{gql,graphql}"],
+  schema: "https://readonlydemo.vendure.io/shop-api",
+  documents: ["src/api/*.{gql,graphql}"],
   generates: {
-    "src/gql/schema.ts/": {
-      preset: 'client',
+    "src/gql/": {
+      preset: "client",
+      plugins: [],
       config: {
-        useTypeImports: true
-      }
-    }
-  }
+        useTypeImports: true,
+        scalars: {
+          Money: "number",
+        },
+        namingConvention: {
+          enumValues: "keep",
+        },
+      },
+    },
+    "./graphql.schema.json": {
+      plugins: ["introspection"],
+    },
+  },
 };

@@ -1,0 +1,21 @@
+query GetFilteredProducts($productIds: [String!]) {
+  products(options: { filter: { id: { in: $productIds } } }) {
+    totalItems
+    items {
+      id
+      name
+      slug
+      description
+      featuredAsset {
+        id
+        preview
+      }
+
+      variants {
+        id
+        priceWithTax
+        currencyCode
+      }
+    }
+  }
+}
