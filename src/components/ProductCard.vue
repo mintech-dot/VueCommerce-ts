@@ -54,9 +54,17 @@ type ProductCardProps = {
   isInWishlist: boolean;
 };
 
+type WishlistUpdateEvent = {
+  productId: string;
+  isInWishlist: boolean;
+};
+
 const props = defineProps<ProductCardProps>();
+const emit = defineEmits<{
+  (event: "update-wishlist", payload: WishlistUpdateEvent): void;
+}>();
+
 const isInWishlist = ref(props.isInWishlist);
-const emit = defineEmits(["update-wishlist"]);
 
 function toggleWishlist() {
   isInWishlist.value = !isInWishlist.value;
