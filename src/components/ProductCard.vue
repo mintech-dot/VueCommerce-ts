@@ -28,7 +28,9 @@
         {{ product.description }}
       </p>
       <div class="mt-6">
-        <Button variant="primary" size="lg">Add to cart</Button>
+        <Button @click="addToCart" variant="primary" size="lg"
+          >Add to cart</Button
+        >
       </div>
       <div class="flex gap-2 justify-center">
         <button @click="toggleWishlist" class="flex gap-2">
@@ -59,12 +61,23 @@ type WishlistUpdateEvent = {
   isInWishlist: boolean;
 };
 
+type ProductCard = {
+  productId: string;
+};
+
 const props = defineProps<ProductCardProps>();
+const isInWishlist = ref(props.isInWishlist);
+
 const emit = defineEmits<{
-  (event: "update-wishlist", payload: WishlistUpdateEvent): void;
+  (event: "update-wishlist", payload: WishlistUpdateEvent): Product;
+  (event: "add-to-cart", payload: ProductCard): Product;
 }>();
 
-const isInWishlist = ref(props.isInWishlist);
+function addToCart() {
+  emit("add-to-cart", {
+    productId: props.product.id,
+  });
+}
 
 function toggleWishlist() {
   isInWishlist.value = !isInWishlist.value;
