@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import whishlist from '../pages/Whishlit.vue'; 
+import cartlist from '../pages/CartList.vue';
 import productlisting from '../pages/ProductListing.vue'; 
 
 // Define your routes
@@ -13,6 +14,11 @@ const routes = [
     path: '/whishlist',
     name: 'whishlist',
     component: whishlist,
+  },
+  {
+    path: '/cart',
+    name: 'cartlist',
+    component: cartlist,
   },
 ];
 

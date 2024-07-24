@@ -22,7 +22,7 @@
 
     <div class="flex lg:gap-4 gap-1">
       <div class="flex gap-1">
-        <ShoppingBasket class="stroke-black mt-2 w-7 h-7" />
+        <RouterLink to="/cart"><ShoppingBasket class="stroke-black mt-2 w-7 h-7" /></RouterLink>
         <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
       </div>
 

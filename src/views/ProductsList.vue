@@ -32,6 +32,7 @@
         :product="product"
         :isInWishlist="isInWishlists(product.id)"
         @update-wishlist="handleWishlistUpdate"
+        @add-to-cart="handleAddToCart(product.id)"
       />
     </div>
 
@@ -52,6 +53,7 @@ import ProductCard from "../components/ProductCard.vue";
 import Dropdown from "../components/ui/Dropdown.vue";
 import Button from "../components/ui/Button.vue";
 import { useWishlist } from "../hooks/useWishlist";
+import { useCart } from "../hooks/useCart";
 
 interface Option {
   value: string;
@@ -75,7 +77,13 @@ const { result, loading, error } =
 
 const products = computed(() => result.value?.products?.items || []);
 
-const { isProductInWishlist, addProductToWhlist, removeProductfromWishlist, save } = useWishlist();
+const {
+  isProductInWishlist,
+  addProductToWhlist,
+  removeProductfromWishlist,
+  save,
+} = useWishlist();
+const { addToCart } = useCart();
 
 const isInWishlists = (productId: string) => {
   return isProductInWishlist(productId);
@@ -95,5 +103,9 @@ function handleWishlistUpdate({
   }
 
   save();
+}
+
+function handleAddToCart(productId: string) {
+  addToCart(productId);
 }
 </script>
