@@ -3,7 +3,7 @@
     class="fixed w-full bg-white shadow-xl flex justify-between p-4 md:px-8 lg:px-24 cursor-pointer"
   >
     <div class="text-3xl font-bold font-poppins">
-      <NuxtLink to="/"> Izar         </NuxtLink>
+      <NuxtLink to="/"> Izar </NuxtLink>
     </div>
     <div class="flex gap-2 md:gap-4 text-secondary lg:pl-56 pt-2 font-inter">
       <ul class="text-primary hidden sm:block">
@@ -22,7 +22,9 @@
 
     <div class="flex lg:gap-4 gap-1">
       <div class="flex gap-1">
-        <NuxtLink to="/cart"><ShoppingBasket class="stroke-black mt-2 w-7 h-7" /></NuxtLink>
+        <NuxtLink to="/cart"
+          ><ShoppingBasket class="stroke-black mt-2 w-7 h-7"
+        /></NuxtLink>
         <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
       </div>
 
@@ -41,5 +43,4 @@
 <script setup lang="ts">
 import { Heart } from "lucide-vue-next";
 import { ShoppingBasket } from "lucide-vue-next";
-import Button from "../components/ui/Button.vue";
 </script>

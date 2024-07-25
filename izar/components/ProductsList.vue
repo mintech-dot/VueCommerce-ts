@@ -45,13 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
 import { GetProductsDocument, type GetProductsQuery } from "../gql/graphql";
-import ProductCard from "../components/ProductCard.vue";
-import Dropdown from "../components/ui/Dropdown.vue";
-import Button from "../components/ui/Button.vue";
-import { useWishlist } from "../composables/useWishlist";
-import { useCart } from "../composables/useCart";
 
 interface Option {
   value: string;
@@ -70,8 +64,8 @@ const FilterOptions = ref<Option[]>([
   { value: "product3", text: "Product 3" },
 ]);
 
-const { data, error } = await
-useAsyncQuery<GetProductsQuery>(GetProductsDocument);
+const { data, error } =
+  await useAsyncQuery<GetProductsQuery>(GetProductsDocument);
 
 const products = computed(() => data.value?.products?.items || []);
 

@@ -46,9 +46,7 @@
 
 <script setup lang="ts">
 import rating from "../assets/rating.svg";
-import Button from "../components/ui/Button.vue";
 import { Heart } from "lucide-vue-next";
-import { ref, defineEmits } from "vue";
 import { type Product } from "../gql/graphql";
 
 type ProductCardProps = {

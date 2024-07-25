@@ -1,6 +1,4 @@
-import { ref, computed } from "vue";
 import { GetProductsDocument, type GetProductsQuery } from "../gql/graphql";
-
 
 interface CartItem {
   productId: string;
@@ -10,35 +8,37 @@ interface CartItem {
 
 export const useCart = () => {
   const CartItems = ref<CartItem[]>([]);
-  const productsQuery =  useAsyncQuery<GetProductsQuery>(GetProductsDocument);
+  const productsQuery = useAsyncQuery<GetProductsQuery>(GetProductsDocument);
 
   const load = () => {
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== "undefined" && window.localStorage) {
       const ProductInCartStorage = JSON.parse(
         localStorage.getItem("addtocart") || "[]"
       );
       CartItems.value = ProductInCartStorage;
     }
-    
   };
 
   const save = () => {
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== "undefined" && window.localStorage) {
       localStorage.setItem("addtocart", JSON.stringify(CartItems.value));
-
     }
   };
 
   const getProductsInCart = () => {
     const allProducts = productsQuery.data.value?.products.items || [];
-    return CartItems.value.map(cartItem => {
-      const product = allProducts.find(product => product.id === cartItem.productId);
-      return {
-        ...product,
-        quantity: cartItem.quantity,
-        priceWithTax: product?.variants[0].priceWithTax,
-      };
-    }).filter(product => product !== undefined);
+    return CartItems.value
+      .map((cartItem) => {
+        const product = allProducts.find(
+          (product) => product.id === cartItem.productId
+        );
+        return {
+          ...product,
+          quantity: cartItem.quantity,
+          priceWithTax: product?.variants[0].priceWithTax,
+        };
+      })
+      .filter((product) => product !== undefined);
   };
 
   const searchProductsInCart = (searchTerm: string) => {
@@ -69,24 +69,26 @@ export const useCart = () => {
     save();
   };
   const incrementQuantity = (productId: string) => {
-    const product = CartItems.value.find(item => item.productId === productId);
+    const product = CartItems.value.find(
+      (item) => item.productId === productId
+    );
     if (product) {
       product.quantity += 1;
       save();
     }
   };
 
-  const multiplyQuantities = (multiplier: number, price : number) => {
+  const multiplyQuantities = (multiplier: number, price: number) => {
     return (price * multiplier).toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
-    })
+    });
   };
 
   const totalPrice = computed(() => {
-    let total = 0
+    let total = 0;
     const CartItems = getProductsInCart();
-    CartItems.forEach(item => total += item.priceWithTax * item.quantity);
+    CartItems.forEach((item) => (total += item.priceWithTax * item.quantity));
     return total.toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
@@ -94,11 +96,13 @@ export const useCart = () => {
   });
 
   const decrementQuantity = (productId: string) => {
-    const product = CartItems.value.find(item => item.productId === productId);
+    const product = CartItems.value.find(
+      (item) => item.productId === productId
+    );
     if (product && product.quantity > 1) {
       product.quantity -= 1;
       save();
-    } 
+    }
   };
   load();
 

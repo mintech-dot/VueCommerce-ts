@@ -1,21 +1,21 @@
-import { ref, computed, onMounted } from "vue";
 import { GetProductsDocument, type GetProductsQuery } from "../gql/graphql";
-
 
 export const useWishlist = () => {
   const wishlistItems = ref<string[]>([]);
-  const productsQuery =  useAsyncQuery<GetProductsQuery>(GetProductsDocument);
+  const productsQuery = useAsyncQuery<GetProductsQuery>(GetProductsDocument);
 
   const load = () => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const storageWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (typeof window !== "undefined" && window.localStorage) {
+      const storageWishlist = JSON.parse(
+        localStorage.getItem("wishlist") || "[]"
+      );
       wishlistItems.value = storageWishlist;
     }
   };
 
   const save = () => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("wishlist", JSON.stringify(wishlistItems.value));
     }
   };
 
@@ -49,9 +49,8 @@ export const useWishlist = () => {
     return wishlistItems.value.includes(productId);
   };
 
-  onMounted(() => {
-    load();
-  });
+  load();
+
   return {
     wishlist: computed(() => wishlistItems.value),
     addProductToWhlist,

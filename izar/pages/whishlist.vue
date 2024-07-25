@@ -71,11 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import Newsletter from "../components/Newsletter.vue";
-import Button from "../components/ui/Button.vue";
 import deleteicon from "../assets/delete.svg";
-import { computed, ref } from "vue";
-import { useWishlist } from "../composables/useWishlist";
 
 const {
   getProductsInWishlist,
