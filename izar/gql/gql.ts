@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as types from './graphql';
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import * as types from "./graphql";
+import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,7 +13,10 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "query GetProducts {\n  products {\n    totalItems\n    items {\n      id\n      name\n      slug\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n        currencyCode\n      }\n    }\n  }\n}": types.GetProductsDocument,
+  "query GetProducts {\n  products {\n    totalItems\n    items {\n      id\n      name\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n      }\n    }\n  }\n}":
+    types.GetProductsDocument,
+  "query GetFilteredProducts($productIds: [String!]) {\n  products(options: {filter: {id: {in: $productIds}}}) {\n    totalItems\n    items {\n      id\n      name\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n      }\n    }\n  }\n}":
+    types.GetFilteredProductsDocument,
 };
 
 /**
@@ -33,10 +36,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetProducts {\n  products {\n    totalItems\n    items {\n      id\n      name\n      slug\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n        currencyCode\n      }\n    }\n  }\n}"): (typeof documents)["query GetProducts {\n  products {\n    totalItems\n    items {\n      id\n      name\n      slug\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n        currencyCode\n      }\n    }\n  }\n}"];
+export function graphql(
+  source: "query GetProducts {\n  products {\n    totalItems\n    items {\n      id\n      name\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n      }\n    }\n  }\n}"
+): (typeof documents)["query GetProducts {\n  products {\n    totalItems\n    items {\n      id\n      name\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n      }\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "query GetFilteredProducts($productIds: [String!]) {\n  products(options: {filter: {id: {in: $productIds}}}) {\n    totalItems\n    items {\n      id\n      name\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n      }\n    }\n  }\n}"
+): (typeof documents)["query GetFilteredProducts($productIds: [String!]) {\n  products(options: {filter: {id: {in: $productIds}}}) {\n    totalItems\n    items {\n      id\n      name\n      description\n      featuredAsset {\n        id\n        preview\n      }\n      variants {\n        id\n        priceWithTax\n      }\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
+  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;

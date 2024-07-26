@@ -1,4 +1,5 @@
-import { GetProductsDocument, type GetProductsQuery } from "../gql/graphql";
+import { GetProductsDocument, type GetFilteredProductsQueryVariables, type GetProductsQuery } from "../gql/graphql";
+import { GetFilteredProductsDocument, type GetFilteredProductsQuery } from "../gql/graphql";
 
 interface CartItem {
   productId: string;
@@ -9,7 +10,12 @@ interface CartItem {
 export const useCart = () => {
   const CartItems = ref<CartItem[]>([]);
   const productsQuery = useAsyncQuery<GetProductsQuery>(GetProductsDocument);
+  const filteredProductsQuery =  useAsyncQuery<GetFilteredProductsQuery, GetFilteredProductsQueryVariables>(GetFilteredProductsDocument, {
 
+    variables: {
+      productIds: CartItems.value.map((item) => item.productId),
+    },
+  });
   const load = () => {
     if (typeof window !== "undefined" && window.localStorage) {
       const ProductInCartStorage = JSON.parse(

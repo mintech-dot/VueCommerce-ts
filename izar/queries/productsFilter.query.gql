@@ -4,7 +4,6 @@ query GetFilteredProducts($productIds: [String!]) {
     items {
       id
       name
-      slug
       description
       featuredAsset {
         id
@@ -14,7 +13,6 @@ query GetFilteredProducts($productIds: [String!]) {
       variants {
         id
         priceWithTax
-        currencyCode
       }
     }
   }
