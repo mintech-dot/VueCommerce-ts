@@ -10,7 +10,7 @@
     </div>
 
     <div class="w-1/2 p-4">
-      <img :src="rating" class="pb-4 pt-3" alt="" />
+      <NuxtImg :src="rating" class="pb-4 pt-3" alt="" />
       <h1 class="text-primary font-semibold font-inter pb-1">
         {{ product.name }}
       </h1>

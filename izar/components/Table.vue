@@ -22,7 +22,7 @@
             alt=""
             class="h-6 cursor-pointer"
           />
-          <img :src="item.featuredAsset?.preview" class="h-16" alt="" />
+          <NuxtImg :src="item.featuredAsset?.preview" class="h-16" alt="" />
           <h1
             class="text-primary text-[14px] sm:text-md font-semibold font-inter"
           >
