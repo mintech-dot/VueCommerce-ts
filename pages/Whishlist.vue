@@ -37,7 +37,7 @@
               <td class="flex items-center gap-4 py-4">
                 <img
                   @click="removeFromWishlist(item.id)"
-                  :src="deleteicon"
+                  src="/delete.svg"
                   alt=""
                   class="h-6 cursor-pointer"
                 />
@@ -71,11 +71,6 @@
 </template>
 
 <script setup lang="ts">
-import Newsletter from "../views/Newsletter.vue";
-import Button from "../components/ui/Button.vue";
-import deleteicon from "../assets/delete.svg";
-import { computed, ref } from "vue";
-import { useWishlist } from "../hooks/useWishlist";
 
 const {
   getProductsInWishlist,

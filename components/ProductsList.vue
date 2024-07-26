@@ -35,7 +35,6 @@
       />
     </div>
 
-    <p v-else-if="loading" class="text-center">Loading...</p>
     <p v-else-if="error" class="text-center">No products found.</p>
     <p v-else class="text-center">No products found.</p>
   </div>
@@ -45,13 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useQuery } from "@vue/apollo-composable";
-import { GetProductsDocument, GetProductsQuery } from "../gql/graphql";
-import ProductCard from "../components/ProductCard.vue";
-import Dropdown from "../components/ui/Dropdown.vue";
-import Button from "../components/ui/Button.vue";
-import { useWishlist } from "../hooks/useWishlist";
+import { GetProductsDocument, type GetProductsQuery } from "../gql/graphql";
 
 interface Option {
   value: string;
@@ -70,12 +63,17 @@ const FilterOptions = ref<Option[]>([
   { value: "product3", text: "Product 3" },
 ]);
 
-const { result, loading, error } =
-  useQuery<GetProductsQuery>(GetProductsDocument);
+const { data, error } =
+  await useAsyncQuery<GetProductsQuery>(GetProductsDocument);
 
-const products = computed(() => result.value?.products?.items || []);
+const products = computed(() => data.value?.products?.items || []);
 
-const { isProductInWishlist, addProductToWhlist, removeProductfromWishlist, save } = useWishlist();
+const {
+  isProductInWishlist,
+  addProductToWhlist,
+  removeProductfromWishlist,
+  save,
+} = useWishlist();
 
 const isInWishlists = (productId: string) => {
   return isProductInWishlist(productId);

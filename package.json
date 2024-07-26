@@ -1,36 +1,33 @@
 {
-  "name": "vuecommerce",
+  "name": "nuxt-app",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.10.8",
-    "@vue/apollo-composable": "^4.0.2",
-    "dotenv": "^16.4.5",
-    "graphql": "^16.9.0",
+    "@nuxt/image": "^1.7.0",
+    "graphql": "^15.9.0",
     "graphql-tag": "^2.12.6",
     "lucide-vue-next": "^0.414.0",
-    "vue": "^3.4.31",
-    "vue-router": "^4.4.0"
+    "nuxt": "^3.12.4",
+    "nuxt-graphql-client": "^0.2.36",
+    "nuxt-storage": "^1.2.2",
+    "vue": "latest"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",
-    "@graphql-codegen/client-preset": "4.3.2",
-    "@graphql-codegen/typescript": "^4.0.9",
-    "@graphql-codegen/typescript-operations": "^4.2.3",
-    "@graphql-codegen/typescript-vue-apollo": "^4.1.1",
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@nuxtjs/apollo": "^5.0.0-alpha.14",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
-    "typescript": "^5.2.2",
-    "vite": "^5.3.4",
-    "vue-tsc": "^2.0.24"
+    "typescript": "^5.5.4",
+    "vue-tsc": "^1.8.27",
+    "@graphql-codegen/client-preset": "4.3.2"
   }
 }

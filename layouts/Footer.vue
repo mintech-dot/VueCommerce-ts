@@ -33,9 +33,9 @@
     <div class="bg-[#6C7275] h-[1px] mx-4 md:mx-8 lg:mx-24"></div>
 
     <div class="flex gap-4 justify-center py-8 sm:hidden cursor-pointer">
-      <img :src="fb" class="w-8" alt="" />
-      <img :src="insta" class="w-8" alt="" />
-      <img :src="ytb" class="w-8" alt="" />
+      <NuxtImg src="/fb.svg" class="w-8" alt="" />
+      <NuxtImg src="/insta.svg" class="w-8" alt="" />
+      <NuxtImg src="/ytb.svg" class="w-8" alt="" />
     </div>
 
     <div class="px-4 md:px-8 lg:px-24 pb-10 text-center">
@@ -68,18 +68,12 @@
           </div>
 
           <div class="flex gap-4 pt-6 cursor-pointer">
-            <img :src="fb" class="w-8" alt="" />
-            <img :src="insta" class="w-8" alt="" />
-            <img :src="ytb" class="w-8" alt="" />
+            <NuxtImg src="/fb.svg" class="w-8" alt="" />
+            <NuxtImg src="/insta.svg" class="w-8" alt="" />
+            <NuxtImg src="/ytb.svg" class="w-8" alt="" />
           </div>
         </div>
       </div>
     </div>
   </footer>
 </template>
-
-<script setup lang="ts">
-import fb from "../assets/fb.svg";
-import insta from "../assets/insta.svg";
-import ytb from "../assets/ytb.svg";
-</script>

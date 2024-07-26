@@ -1,7 +1,7 @@
 <template>
   <div class="flex border-secondary/50 border rounded-xl">
     <div class="w-1/2">
-      <img
+      <NuxtImg
         v-if="product.featuredAsset"
         :src="product.featuredAsset.preview"
         :alt="product.name"
@@ -10,7 +10,7 @@
     </div>
 
     <div class="w-1/2 p-4">
-      <img :src="rating" class="pb-4 pt-3" alt="" />
+      <NuxtImg src="/rating.svg" class="pb-4 pt-3" alt="" />
       <h1 class="text-primary font-semibold font-inter pb-1">
         {{ product.name }}
       </h1>
@@ -43,11 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import rating from "../assets/rating.svg";
-import Button from "../components/ui/Button.vue";
 import { Heart } from "lucide-vue-next";
-import { ref, defineEmits } from "vue";
-import { Product } from "../gql/graphql";
+import { type Product } from "../gql/graphql";
 
 type ProductCardProps = {
   product: Product;

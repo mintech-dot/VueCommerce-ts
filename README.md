@@ -1,6 +1,6 @@
 # VueCommerce
 
-Welcome to VueCommerce, an e-commerce application built with Vue.js. This project aims to provide a modern, efficient, and user-friendly platform for online shopping.
+Welcome to VueCommerce, an e-commerce application built with Vue.js & nuxtjs. This project aims to provide a modern, efficient, and user-friendly platform for online shopping.
 
 ## Table of Contents
 
