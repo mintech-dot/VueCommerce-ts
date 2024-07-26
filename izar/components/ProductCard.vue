@@ -1,7 +1,7 @@
 <template>
   <div class="flex border-secondary/50 border rounded-xl">
     <div class="w-1/2">
-      <img
+      <NuxtImg
         v-if="product.featuredAsset"
         :src="product.featuredAsset.preview"
         :alt="product.name"
