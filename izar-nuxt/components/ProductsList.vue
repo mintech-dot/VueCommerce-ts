@@ -32,6 +32,7 @@
         :product="product"
         :isInWishlist="isInWishlists(product.id)"
         @update-wishlist="handleWishlistUpdate"
+        @add-to-cart="handleAddToCart(product.id)"
       />
     </div>
 
@@ -74,6 +75,7 @@ const {
   removeProductfromWishlist,
   save,
 } = useWishlist();
+const { addToCart } = useCart();
 
 const isInWishlists = (productId: string) => {
   return isProductInWishlist(productId);
@@ -93,5 +95,9 @@ function handleWishlistUpdate({
   }
 
   save();
+}
+
+function handleAddToCart(productId: string) {
+  addToCart(productId);
 }
 </script>
