@@ -21,17 +21,20 @@
     </div>
 
     <div class="flex lg:gap-4 gap-1">
-      <div class="flex gap-1">
-        <ShoppingBasket class="stroke-black mt-2 w-7 h-7" />
-        <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
-      </div>
-
-      <div class="flex gap-1">
-        <div class="pt-3">
-          <NuxtLink to="/whishlist"> <heart fill="black" /></NuxtLink>
+      <NuxtLink to="/cart">
+        <div class="flex gap-1">
+          <ShoppingBasket class="stroke-black mt-2 w-7 h-7" />
+          <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
         </div>
-        <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
-      </div>
+      </NuxtLink>
+      <NuxtLink to="/whishlist">
+        <div class="flex gap-1">
+          <div class="pt-3">
+            <heart fill="black" />
+          </div>
+          <h2 class="text-white text-xl bg-black rounded-full my-2 px-2">0</h2>
+        </div>
+      </NuxtLink>
       <div class="hidden sm:block">
         <Button variant="primary" size="lg">Sign In</Button>
       </div>
