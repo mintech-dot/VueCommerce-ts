@@ -29,39 +29,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="item in filteredProducts"
-              :key="item.id"
-              class="border-b border-secondary/30"
-            >
-              <td class="flex items-center gap-4 py-4">
-                <img
-                  @click="removeFromWishlist(item.id)"
-                  src="/delete.svg"
-                  alt=""
-                  class="h-6 cursor-pointer"
-                />
-                <img :src="item.featuredAsset?.preview" class="h-16" alt="" />
-                <h1
-                  class="text-primary text-[14px] sm:text-md font-semibold font-inter"
-                >
-                  {{ item.name }}
-                </h1>
-              </td>
-              <td
-                class="text-primary font-semibold font-inter py-4 text-[14px] md:text-md"
-              >
-                {{
-                  item.variants[0].priceWithTax.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  })
-                }}
-              </td>
-              <td class="md:pr-10 py-4 w-1/6">
-                <Button variant="primary" size="lg">Add</Button>
-              </td>
-            </tr>
+            <Table
+              v-for="product in filteredProducts"
+              :key="product.id"
+              :product="product"
+              @delete-wishlist="removeFromWishlist"
+            />
           </tbody>
         </table>
       </div>
@@ -71,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-
 const {
   getProductsInWishlist,
   removeProductfromWishlist,
