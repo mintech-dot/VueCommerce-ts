@@ -25,7 +25,7 @@
       }}
     </td>
     <td class="md:pr-10 py-4 w-1/6">
-      <Button variant="primary" size="lg">Add</Button>
+      <Button @click="addToCart" variant="primary" size="lg">Add</Button>
     </td>
   </tr>
 </template>
@@ -37,12 +37,24 @@ type Props = {
     product: Product;
 };
 
+type addToCartEvent = {
+    productId: string;
+}
+
+const emit = defineEmits<{
+    (e: "add-to-cart", event: addToCartEvent): void;
+    (e: "delete-wishlist", id: string): void;
+}>();
+
+
+function addToCart() {
+  emit("add-to-cart", {
+    productId: props.product.id,
+  });
+}
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
-    (e: "delete-wishlist", id: string): void;
-}>();
 
 function removeFromWishlist(id: string) {
   emit("delete-wishlist", id);

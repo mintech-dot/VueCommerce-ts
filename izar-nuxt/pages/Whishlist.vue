@@ -34,6 +34,7 @@
               :key="product.id"
               :product="product"
               @delete-wishlist="removeFromWishlist"
+              @add-to-cart="handleAddToCart(product.id)"
             />
           </tbody>
         </table>
@@ -50,6 +51,10 @@ const {
   searchProductsInWishlist,
 } = useWishlist();
 
+const { addToCart } = useCart();
+const handleAddToCart = (id: string) => {
+  addToCart(id);
+};
 const searchText = ref("");
 
 const productsInWishlist = computed(() => {
