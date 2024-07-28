@@ -33,12 +33,14 @@
         >
       </div>
       <div class="flex gap-2 justify-center">
-        <button @click="toggleWishlist" class="flex gap-2">
-          <div class="pt-4">
-            <heart :fill="isInWishlist ? 'black' : 'white'" />
-          </div>
-          <h2 class="py-4">wishlist</h2>
-        </button>
+        <ClientOnly>
+          <button @click="toggleWishlist" class="flex gap-2">
+            <div class="pt-4">
+              <heart :fill="isInWishlist ? 'black' : 'white'" />
+            </div>
+            <h2 class="py-4">wishlist</h2>
+          </button>
+        </ClientOnly>
       </div>
     </div>
   </div>

@@ -14,31 +14,33 @@
     </div>
 
     <div class="p-4 border border-secondary/20 rounded-xl mt-6 shadow-lg">
-      <div v-if="!filteredProducts.length">
-        <p class="text-primary text-center font-inter font-semibold">
-          No products found.
-        </p>
-      </div>
-      <div v-else>
-        <table class="w-full">
-          <thead class="text-secondary">
-            <tr class="border-b border-secondary/30">
-              <th class="pl-10 text-left">Product</th>
-              <th class="text-left">Price ($)</th>
-              <th class="text-center md:pr-14">Add to cart</th>
-            </tr>
-          </thead>
-          <tbody>
-            <Table
-              v-for="product in filteredProducts"
-              :key="product.id"
-              :product="product"
-              @delete-wishlist="removeFromWishlist"
-              @add-to-cart="handleAddToCart(product.id)"
-            />
-          </tbody>
-        </table>
-      </div>
+      <ClientOnly>
+        <div v-if="!filteredProducts.length">
+          <p class="text-primary text-center font-inter font-semibold">
+            No products found.
+          </p>
+        </div>
+        <div v-else>
+          <table class="w-full">
+            <thead class="text-secondary">
+              <tr class="border-b border-secondary/30">
+                <th class="pl-10 text-left">Product</th>
+                <th class="text-left">Price ($)</th>
+                <th class="text-center md:pr-14">Add to cart</th>
+              </tr>
+            </thead>
+            <tbody>
+              <Table
+                v-for="product in filteredProducts"
+                :key="product.id"
+                :product="product"
+                @delete-wishlist="removeFromWishlist"
+                @add-to-cart="handleAddToCart(product.id)"
+              />
+            </tbody>
+          </table>
+        </div>
+      </ClientOnly>
     </div>
   </div>
   <Newsletter />

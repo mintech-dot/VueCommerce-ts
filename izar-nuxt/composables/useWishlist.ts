@@ -2,7 +2,7 @@ import { GetProductsDocument, type GetProductsQuery } from "../gql/graphql";
 
 export const useWishlist = () => {
   const wishlistItems = ref<string[]>([]);
-  const productsQuery = useAsyncQuery<GetProductsQuery>(GetProductsDocument);
+  const productsQuery = useQuery<GetProductsQuery>(GetProductsDocument);
 
   const load = () => {
     if (import.meta.client) {
@@ -20,7 +20,7 @@ export const useWishlist = () => {
   };
 
   const getProductsInWishlist = () => {
-    const allProducts = productsQuery.data.value?.products.items || [];
+    const allProducts = productsQuery.result.value?.products.items || [];
     return allProducts.filter((product) =>
       wishlistItems.value.includes(product.id)
     );

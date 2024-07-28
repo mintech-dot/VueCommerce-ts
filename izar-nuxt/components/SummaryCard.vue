@@ -63,9 +63,9 @@
       <h3 class="text-primary font-semibold">Total</h3>
       <h3 class="text-primary font-semibold">{{ totalPrice }}</h3>
     </div>
-    <td class="py-4 w-1/6">
+    <div class="py-4">
       <Button variant="primary" size="lg">Checkout</Button>
-    </td>
+    </div>
   </div>
 </template>
 

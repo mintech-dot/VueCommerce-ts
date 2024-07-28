@@ -8,8 +8,8 @@ interface CartItem {
 
 export const useCart = () => {
   const cartItems = ref<CartItem[]>([]);
-  const productsQuery = useAsyncQuery<GetProductsQuery>(GetProductsDocument);
- 
+  const productsQuery = useQuery<GetProductsQuery>(GetProductsDocument);
+
   const load = () => {
     if (import.meta.client) {
       const ProductInCartStorage = JSON.parse(
@@ -26,7 +26,7 @@ export const useCart = () => {
   };
 
   const getProductsInCart = () => {
-    const allProducts = productsQuery.data.value?.products.items || [];
+    const allProducts = productsQuery.result.value?.products.items || [];
     return cartItems.value
       .map((cartItem) => {
         const product = allProducts.find(

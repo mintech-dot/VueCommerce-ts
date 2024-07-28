@@ -23,7 +23,7 @@
   </div>
   <div>
     <div
-      v-if="products && products"
+      v-if="products.length > 0"
       class="px-4 md:px-8 lg:px-24 pt-12 gap-4 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
     >
       <ProductCard
@@ -35,11 +35,10 @@
         @add-to-cart="handleAddToCart(product.id)"
       />
     </div>
-
     <p v-else-if="error" class="text-center">No products found.</p>
     <p v-else class="text-center">No products found.</p>
   </div>
-  <div div class="flex justify-center py-8">
+  <div class="flex justify-center py-8">
     <Button variant="secondary" size="lg">Show More</Button>
   </div>
 </template>
@@ -64,10 +63,9 @@ const FilterOptions = ref<Option[]>([
   { value: "product3", text: "Product 3" },
 ]);
 
-const { data, error } =
-  await useAsyncQuery<GetProductsQuery>(GetProductsDocument);
+const { result, error } = useQuery<GetProductsQuery>(GetProductsDocument);
 
-const products = computed(() => data.value?.products?.items || []);
+const products = computed(() => result.value?.products?.items || []);
 
 const {
   isProductInWishlist,
