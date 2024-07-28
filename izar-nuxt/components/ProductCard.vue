@@ -28,15 +28,19 @@
         {{ product.description }}
       </p>
       <div class="mt-6">
-        <Button variant="primary" size="lg">Add to cart</Button>
+        <Button @click="addToCart" variant="primary" size="lg"
+          >Add to cart</Button
+        >
       </div>
       <div class="flex gap-2 justify-center">
-        <button @click="toggleWishlist" class="flex gap-2">
-          <div class="pt-4">
-            <heart :fill="isInWishlist ? 'black' : 'white'" />
-          </div>
-          <h2 class="py-4">wishlist</h2>
-        </button>
+        <ClientOnly>
+          <button @click="toggleWishlist" class="flex gap-2">
+            <div class="pt-4">
+              <heart :fill="isInWishlist ? 'black' : 'white'" />
+            </div>
+            <h2 class="py-4">wishlist</h2>
+          </button>
+        </ClientOnly>
       </div>
     </div>
   </div>
@@ -46,22 +50,33 @@
 import { Heart } from "lucide-vue-next";
 import { type Product } from "../gql/graphql";
 
-type ProductCardProps = {
+interface ProductCardProps {
   product: Product;
   isInWishlist: boolean;
-};
+}
 
-type WishlistUpdateEvent = {
+interface WishlistUpdateEvent {
   productId: string;
   isInWishlist: boolean;
-};
+}
+
+interface ProductCard {
+  productId: string;
+}
 
 const props = defineProps<ProductCardProps>();
+const isInWishlist = ref(props.isInWishlist);
+
 const emit = defineEmits<{
   (event: "update-wishlist", payload: WishlistUpdateEvent): void;
+  (event: "add-to-cart", payload: ProductCard): void;
 }>();
 
-const isInWishlist = ref(props.isInWishlist);
+function addToCart() {
+  emit("add-to-cart", {
+    productId: props.product.id,
+  });
+}
 
 function toggleWishlist() {
   isInWishlist.value = !isInWishlist.value;

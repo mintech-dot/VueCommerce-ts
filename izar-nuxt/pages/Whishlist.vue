@@ -14,54 +14,63 @@
     </div>
 
     <div class="p-4 border border-secondary/20 rounded-xl mt-6 shadow-lg">
-      <div v-if="!filteredProducts.length">
-        <p class="text-primary text-center font-inter font-semibold">
-          No products found.
-        </p>
-      </div>
-      <div v-else>
-        <table class="w-full">
-          <thead class="text-secondary">
-            <tr class="border-b border-secondary/30">
-              <th class="pl-10 text-left">Product</th>
-              <th class="text-left">Price ($)</th>
-              <th class="text-center md:pr-14">Add to cart</th>
-            </tr>
-          </thead>
-          <tbody>
-            <Table
-              v-for="product in filteredProducts"
-              :key="product.id"
-              :product="product"
-              @delete-wishlist="removeFromWishlist"
-            />
-          </tbody>
-        </table>
-      </div>
+      <ClientOnly>
+        <div v-if="!filteredProducts.length">
+          <p class="text-primary text-center font-inter font-semibold">
+            No products found.
+          </p>
+        </div>
+        <div v-else>
+          <table class="w-full">
+            <thead class="text-secondary">
+              <tr class="border-b border-secondary/30">
+                <th class="pl-10 text-left">Product</th>
+                <th class="text-left">Price ($)</th>
+                <th class="text-center md:pr-14">Add to cart</th>
+              </tr>
+            </thead>
+            <tbody>
+              <Table
+                v-for="product in filteredProducts"
+                :key="product.id"
+                :product="product"
+                @delete-wishlist="removeFromWishlist"
+                @add-to-cart="handleAddToCart(product.id)"
+              />
+            </tbody>
+          </table>
+        </div>
+      </ClientOnly>
     </div>
   </div>
   <Newsletter />
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from "vue";
+
+const searchText = ref("");
+
 const {
   getProductsInWishlist,
   removeProductfromWishlist,
   searchProductsInWishlist,
 } = useWishlist();
 
-const searchText = ref("");
+const { addToCart } = useCart();
 
-const productsInWishlist = computed(() => {
-  return getProductsInWishlist();
-});
+const productsInWishlist = computed(() => getProductsInWishlist());
 
 const filteredProducts = computed(() => {
-  if (searchText.value === "") return productsInWishlist.value;
-  else {
-    return searchProductsInWishlist(searchText.value);
-  }
+  return searchText.value === ""
+    ? productsInWishlist.value
+    : searchProductsInWishlist(searchText.value);
 });
+
+const handleAddToCart = (id: string) => {
+  addToCart(id);
+};
+
 const removeFromWishlist = (id: string) => {
   removeProductfromWishlist(id);
 };
