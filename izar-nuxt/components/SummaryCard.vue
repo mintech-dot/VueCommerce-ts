@@ -70,11 +70,9 @@
 </template>
 
 <script setup lang="ts">
-
-type props = {
-  totalPrice: string
+interface props {
+  totalPrice: string;
 }
 
-defineProps<props>()
-
+defineProps<props>();
 </script>

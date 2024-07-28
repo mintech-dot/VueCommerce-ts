@@ -48,26 +48,26 @@
 import { Heart } from "lucide-vue-next";
 import { type Product } from "../gql/graphql";
 
-type ProductCardProps = {
+interface ProductCardProps {
   product: Product;
   isInWishlist: boolean;
-};
+}
 
-type WishlistUpdateEvent = {
+interface WishlistUpdateEvent {
   productId: string;
   isInWishlist: boolean;
-};
+}
 
-type ProductCard = {
+interface ProductCard {
   productId: string;
-};
+}
 
 const props = defineProps<ProductCardProps>();
 const isInWishlist = ref(props.isInWishlist);
 
 const emit = defineEmits<{
-  (event: "update-wishlist", payload: WishlistUpdateEvent): Product;
-  (event: "add-to-cart", payload: ProductCard): Product;
+  (event: "update-wishlist", payload: WishlistUpdateEvent): void;
+  (event: "add-to-cart", payload: ProductCard): void;
 }>();
 
 function addToCart() {

@@ -33,11 +33,11 @@
 <script setup lang="ts">
 import type { Product } from "~~/gql/graphql";
 
-type Props = {
+interface Props {
     product: Product;
 };
 
-type addToCartEvent = {
+interface addToCartEvent {
     productId: string;
 }
 

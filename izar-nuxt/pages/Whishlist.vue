@@ -45,6 +45,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from "vue";
+
+const searchText = ref("");
+
 const {
   getProductsInWishlist,
   removeProductfromWishlist,
@@ -52,21 +56,19 @@ const {
 } = useWishlist();
 
 const { addToCart } = useCart();
+
+const productsInWishlist = computed(() => getProductsInWishlist());
+
+const filteredProducts = computed(() => {
+  return searchText.value === ""
+    ? productsInWishlist.value
+    : searchProductsInWishlist(searchText.value);
+});
+
 const handleAddToCart = (id: string) => {
   addToCart(id);
 };
-const searchText = ref("");
 
-const productsInWishlist = computed(() => {
-  return getProductsInWishlist();
-});
-
-const filteredProducts = computed(() => {
-  if (searchText.value === "") return productsInWishlist.value;
-  else {
-    return searchProductsInWishlist(searchText.value);
-  }
-});
 const removeFromWishlist = (id: string) => {
   removeProductfromWishlist(id);
 };
